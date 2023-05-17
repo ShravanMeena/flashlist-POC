@@ -1,18 +1,11 @@
 
-// // WITH FLASHLIST
+// // WITH Flatlist
 import * as React from 'react';
-
-import { FlashList } from '@shopify/flash-list';
-
-import { QueryClient, QueryClientProvider } from 'react-query';
-import { API_KEY, BASE_URL } from './src/config';
+import { API_KEY, BASE_URL, DEFAULT_ITEM_HEIGHT } from './src/config';
 import axios from 'axios';
 import VideoPlayerOld from './src/reels/VideoPlayerOld';
 import { FlatList, StyleSheet, View, ActivityIndicator } from 'react-native';
-import {OptimizedFlatList} from 'react-native-optimized-flatlist'
 
-const queryClient = new QueryClient();
-let DEFAULT_ITEM_HEIGHT = 500
 export default function App() {
   const [Viewable, SetViewable] = React.useState([]);
   const [loading, setLoading] = React.useState(true)
@@ -76,7 +69,6 @@ export default function App() {
       windowSize={10}
       getItemLayout={getItemLayout}
       keyExtractor={(item, index) => item.id?.toString()}
-      // renderItem={({ item, index }) => <VideoPlayerOld index={index + 1} {...item} viewable={Viewable} />}
       renderItem={renderItem}
       ref={ref}
       onViewableItemsChanged={onViewableItemsChanged}

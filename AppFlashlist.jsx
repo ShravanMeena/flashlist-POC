@@ -1,21 +1,12 @@
 
 // // WITH FLASHLIST
 import * as React from 'react';
-import { Text, View, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
-import uuidv4 from 'react-native-uuid';
-
-import VideoPlayer from './src/reels/VideoPlayer';
-import { data } from './data';
+import {  View, StyleSheet, ActivityIndicator } from 'react-native';
 import { FlashList } from '@shopify/flash-list';
-import { windowHeight, windowWidth } from './src/StyleSheetGlobal';
-
-import { QueryClient, QueryClientProvider } from 'react-query';
-import { API_KEY, BASE_URL } from './src/config';
+import { API_KEY, BASE_URL, DEFAULT_ITEM_HEIGHT } from './src/config';
 import axios from 'axios';
 import VideoPlayerOld from './src/reels/VideoPlayerOld';
 
-const queryClient = new QueryClient();
-let DEFAULT_ITEM_HEIGHT = 290
 export default function App() {
   const [Viewable, SetViewable] = React.useState([]);
 
@@ -23,6 +14,7 @@ export default function App() {
   const [localData, setLocalData] = React.useState([])
 
   const ref = React.useRef(null);
+
   const onViewableItemsChanged = React.useCallback((viewableItems) => {
     let Check = [];
 
@@ -71,7 +63,6 @@ export default function App() {
         onViewableItemsChanged={onViewableItemsChanged}
         viewabilityConfig={viewConfigRef.current}
         estimatedItemSize={DEFAULT_ITEM_HEIGHT}
-        // removeClippedSubviews = {true}
         onEndReachedThreshold={0.2}
         onEndReached={onEndReached}
         ListFooterComponent={() => loading ? <ActivityIndicator size={150} /> : <></>}

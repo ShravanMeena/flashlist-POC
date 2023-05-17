@@ -1,12 +1,11 @@
 import * as React from 'react';
-import { Text, View, StyleSheet, Dimensions, InteractionManager, Button, Image, ActivityIndicator } from 'react-native';
+import { Text, View, StyleSheet, Dimensions } from 'react-native';
 import Video from 'react-native-video';
 import { windowHeight } from '../StyleSheetGlobal';
 import VisibilityCheck from './Visiblity';
 
-export default function VideoPlayerOld({ viewable, id, thumb, link, video_files, vdUrl, video_pictures, index }) {
+export default function VideoPlayerOld({ viewable, id, link, video_files, video_pictures }) {
     const videoRef = React.useRef(null);
-
     const [active, setActive] = React.useState(false)
     React.useEffect(() => {
         if (viewable) {
@@ -35,10 +34,6 @@ export default function VideoPlayerOld({ viewable, id, thumb, link, video_files,
         videoRef.current.setNativeProps({ paused: !isVisible });
     }
 
-    const [loading, setLoading] = React.useState(true)
-    const onLoad = () => {
-        setLoading(false)
-    }
     return (
         <View style={styles.container}>
 
@@ -46,7 +41,6 @@ export default function VideoPlayerOld({ viewable, id, thumb, link, video_files,
             <Text>{link}</Text>
             <VisibilityCheck style={{ flex: 1 }} onChange={chnge}>
                 <Video
-                    // onLoad={onLoad}
                     ref={videoRef}
                     source={{ uri: video_files[0].link }}
                     poster={video_pictures[0].picture}
@@ -58,18 +52,6 @@ export default function VideoPlayerOld({ viewable, id, thumb, link, video_files,
                     style={styles.backgroundVideo}
                 />
             </VisibilityCheck>
-
-            {/* <Video
-                ref={videoRef}
-                source={{ uri: video_files[0].link }}
-                poster={video_pictures[0].picture}
-                repeat={true}
-                resizeMode={'cover'}
-                muted={true}
-                paused={!active}
-                posterResizeMode="cover"
-                style={styles.backgroundVideo}
-            /> */}
 
             <View style={{
                 display: "flex",
