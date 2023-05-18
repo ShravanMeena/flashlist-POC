@@ -2,31 +2,25 @@ import * as React from 'react';
 import { Text, View, StyleSheet, Dimensions } from 'react-native';
 import Video from 'react-native-video';
 import { windowHeight } from '../StyleSheetGlobal';
-import VisibilityCheck from './Visiblity';
+// import VisibilityCheck from './Visiblity';
 
-export default function VideoPlayerOld({ viewable, id, link, video_files, video_pictures }) {
+export default function VideoPlayerOld({ viewable, id, link, video_files, video_pictures,index }) {
     const videoRef = React.useRef(null);
-    const [active, setActive] = React.useState(false)
+  
     React.useEffect(() => {
         if (viewable) {
             if (viewable.length) {
                 if (viewable[0].id === id) {
-                    setActive(true)
                     videoRef.current.setNativeProps({ paused: false })
                 } else {
                     videoRef.current.setNativeProps({ paused: true })
-                    setActive(false)
-
                 }
             } else {
                 videoRef.current.setNativeProps({ paused: true });
-                setActive(false)
-
             }
 
         } else {
             videoRef.current.setNativeProps({ paused: true });
-            setActive(false)
         }
     }, [viewable]);
 
@@ -35,11 +29,10 @@ export default function VideoPlayerOld({ viewable, id, link, video_files, video_
     }
 
     return (
-        <View style={styles.container}>
-
+        <View style={styles.container} key={index}>
             <Text>{id}</Text>
             <Text>{link}</Text>
-            <VisibilityCheck style={{ flex: 1 }} onChange={chnge}>
+            {/* <VisibilityCheck style={{ flex: 1 }} onChange={chnge}> */}
                 <Video
                     ref={videoRef}
                     source={{ uri: video_files[0].link }}
@@ -51,7 +44,7 @@ export default function VideoPlayerOld({ viewable, id, link, video_files, video_
                     posterResizeMode="cover"
                     style={styles.backgroundVideo}
                 />
-            </VisibilityCheck>
+            {/* </VisibilityCheck> */}
 
             <View style={{
                 display: "flex",

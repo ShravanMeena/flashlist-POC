@@ -52,13 +52,19 @@ export default function App() {
       });
   }
 
+  const renderItem = React.useCallback(
+    ({ item, index }) => <VideoPlayerOld index={index + 1} {...item} viewable={Viewable} />,
+    [Viewable],
+  )
+
+
   return (
     <View style={styles.container}>
       <FlashList
         data={localData}
         extraData={Viewable}
         keyExtractor={(item, index) => item.id?.toString()}
-        renderItem={({ item, index }) => <VideoPlayerOld index={index + 1} {...item} viewable={Viewable} />}
+        renderItem={renderItem}
         ref={ref}
         onViewableItemsChanged={onViewableItemsChanged}
         viewabilityConfig={viewConfigRef.current}
@@ -74,6 +80,6 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'black',
+    backgroundColor: 'red',
   },
 });

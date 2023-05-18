@@ -26,29 +26,38 @@ export default function App() {
   const [page, setPage] = React.useState(1)
 
   const onEndReached = async () => {
-    setLoading(true)
-    await axios.get(BASE_URL, {
-      headers: {
-        Authorization: API_KEY,
-      },
-      params: {
-        page: page,
-        per_page: 20,
-        size: "small"
-      }
-    })
-      .then(function (response) {
-        SetViewable(response.data.videos);
-        setLoading(false)
-        setPage(page + 1)
-        setLocalData([...localData, ...response.data.videos])
-
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    if(!loading){
+      setPage(page + 1)
+      setLoading(true)
+    }
   }
 
+  React.useEffect(() => {
+    const getVideos = async () => {
+      setLoading(true)
+      await axios.get(BASE_URL, {
+        headers: {
+          Authorization: API_KEY,
+        },
+        params: {
+          page: page,
+          per_page: 20,
+          size: "small"
+        }
+      })
+        .then(function (response) {
+          SetViewable(response.data.videos);
+          setLoading(false)
+          setLocalData([...localData, ...response.data.videos])
+  
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
+    getVideos()
+  }, [page])
+  
   const renderItem = React.useCallback(
     ({ item }) => <VideoPlayerOld {...item} viewable={Viewable} />,
     [Viewable],
@@ -69,6 +78,7 @@ export default function App() {
       windowSize={10}
       getItemLayout={getItemLayout}
       keyExtractor={(item, index) => item.id?.toString()}
+      // renderItem={({ item, index }) => <VideoPlayerOld index={index + 1} {...item} viewable={Viewable} />}
       renderItem={renderItem}
       ref={ref}
       onViewableItemsChanged={onViewableItemsChanged}
