@@ -74,8 +74,9 @@ export default function App() {
       data={localData}
       maxToRenderPerBatch={8}
       removeClippedSubviews
-      // extraData={Viewable}
       windowSize={10}
+      // extraData={Viewable}
+
       getItemLayout={getItemLayout}
       keyExtractor={(item, index) => item.id?.toString()}
       // renderItem={({ item, index }) => <VideoPlayerOld index={index + 1} {...item} viewable={Viewable} />}
@@ -86,8 +87,9 @@ export default function App() {
       estimatedItemSize={DEFAULT_ITEM_HEIGHT}
       // removeClippedSubviews = {true}
       initialNumToRender={3}
-      onEndReachedThreshold={0.2}
       disableVirtualization = {true}
+
+      onEndReachedThreshold={0.2}
       onEndReached={onEndReached}
     
       ListFooterComponent={() => loading ? <ActivityIndicator size={150} /> : <></>}
